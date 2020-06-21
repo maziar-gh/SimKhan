@@ -20,6 +20,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import ir.maziardev.simkhan.R;
+import ir.maziardev.simkhan.activity.DetailActivity;
 import ir.maziardev.simkhan.model.SimCardListRows;
 import ir.maziardev.simkhan.enums.Extras;
 
@@ -68,6 +69,17 @@ public class SimCardAdapter extends RecyclerView.Adapter<SimCardAdapter.ViewHold
         lastPosition = position;*/
 
         SimCardListRows list = dataList.get(position);
+
+        if(list.getIsOnlineSell()){
+            holder.tv_action.setText("خرید آنلاین");
+            holder.tv_action.setBackground(mContext.getResources().getDrawable(R.drawable.turquoise_color));
+            holder.tv_action.setTextColor(mContext.getResources().getColor(R.color.colorturquose));
+        }else {
+            holder.tv_action.setText("اطلاعات تماس");
+            holder.tv_action.setBackground(mContext.getResources().getDrawable(R.drawable.greay_color));
+            holder.tv_action.setTextColor(mContext.getResources().getColor(R.color.colorgray));
+        }
+
         holder.tv_number.setText(list.getSimCardNumber());
         holder.tv_description.setText(list.getSimCardDescription());
         holder.tv_price.setText(list.getPrice());
@@ -88,13 +100,17 @@ public class SimCardAdapter extends RecyclerView.Adapter<SimCardAdapter.ViewHold
         public void onClick(View view) {
             SimCardListRows list = dataList.get(position);
 
-            Toast.makeText(mContext, "pay", Toast.LENGTH_SHORT).show();
-
-            /*Intent intent = new Intent(mContext, WebActivity.class);
+            Intent intent = new Intent(mContext, DetailActivity.class);
+            intent.putExtra(Extras.ACTION.toString(), list.getIsOnlineSell());
             intent.putExtra(Extras.NUMBER.toString(), list.getSimCardNumber());
             intent.putExtra(Extras.DESCRIPTION.toString(), list.getSimCardDescription());
             intent.putExtra(Extras.PRICE.toString(), list.getPrice());
-            mContext.startActivity(intent);*/
+
+            intent.putExtra(Extras.OWNERID.toString(), list.getSimCardOwnerID());
+            intent.putExtra(Extras.OPERATORID.toString(), list.getSimCardOperatorID());
+            intent.putExtra(Extras.STATUS.toString(), list.getSimCardWorkStatusID());
+
+            mContext.startActivity(intent);
         }
     }
 

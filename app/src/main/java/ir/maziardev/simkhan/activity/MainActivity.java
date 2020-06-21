@@ -413,7 +413,7 @@ public class MainActivity extends AppCompatActivity {
         showProgressView();
         apiService = APIUtils.getAPIService();
         apiService.getResponse(Base.BASE_SIMCARD_USERNAME, Base.BASE_SIMCARD_PASSWORD, page, limit,
-                "1", "2", "2",
+                "2", "2", "2",
                 "0").enqueue(new Callback<DataResponse>() {
             @Override
             public void onResponse(Call<DataResponse> call, Response<DataResponse> response) {
